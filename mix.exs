@@ -11,12 +11,13 @@ defmodule Honeydew.Mixfile do
      deps: deps(),
      package: package(),
      description: "Pluggable local/remote job queue + worker pool with permanent workers.",
+     elixirc_paths: elixirc_paths(Mix.env),
      dialyzer: [plt_add_apps: [:mnesia]]]
   end
 
-  # Configuration for the OTP application
-  #
-  # Type `mix help compile.app` for more information
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
+
   def application do
     [extra_applications: [:logger]]
   end
@@ -25,7 +26,8 @@ defmodule Honeydew.Mixfile do
     [
       {:riakc, ">= 2.4.1", only: :dev},
       {:ex_doc, ">= 0.0.0", only: :dev},
-      {:dialyxir, "~> 0.5", only: [:dev, :test], runtime: false}
+      {:dialyxir, "~> 0.5", only: [:dev, :test], runtime: false},
+      {:disorder, path: "/Users/mikes/Projects/disorder", only: :dev},
     ]
   end
 
